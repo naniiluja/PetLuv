@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetLuv.Infrastructure", "Pe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetLuv.API", "PetLuv.API\PetLuv.API.csproj", "{584A10EE-2AF6-4F27-92E0-2E64E6CCABC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetLuv.Application.Tests", "..\..\backend\PetLuv.Application.Tests\PetLuv.Application.Tests.csproj", "{E9747A9F-4287-4ECB-BF22-520E82198CE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{584A10EE-2AF6-4F27-92E0-2E64E6CCABC3}.Release|x64.Build.0 = Release|Any CPU
 		{584A10EE-2AF6-4F27-92E0-2E64E6CCABC3}.Release|x86.ActiveCfg = Release|Any CPU
 		{584A10EE-2AF6-4F27-92E0-2E64E6CCABC3}.Release|x86.Build.0 = Release|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Debug|x64.Build.0 = Debug|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Debug|x86.Build.0 = Debug|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Release|x64.ActiveCfg = Release|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Release|x64.Build.0 = Release|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Release|x86.ActiveCfg = Release|Any CPU
+		{E9747A9F-4287-4ECB-BF22-520E82198CE8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
