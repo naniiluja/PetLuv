@@ -11,35 +11,83 @@ namespace PetLuv.API.Controllers;
 [Authorize]
 public class MedicalRecordController : ControllerBase
 {
-    // This controller will be implemented in a future task.
-    // For now, it serves as a placeholder for the API structure.
+    private readonly IMedicalRecordService _medicalRecordService;
+
+    public MedicalRecordController(IMedicalRecordService medicalRecordService)
+    {
+        _medicalRecordService = medicalRecordService;
+    }
+
+    private int GetCurrentUserId()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId))
+        {
+            throw new InvalidOperationException("User ID not found in token.");
+        }
+        return int.Parse(userId);
+    }
 
     [HttpGet]
-    public Task<ActionResult<IEnumerable<MedicalRecordDto>>> GetMedicalRecords(int petId)
+    public async Task<ActionResult<IEnumerable<MedicalRecordDto>>> GetMedicalRecords(int petId)
     {
-        // Logic to verify pet ownership and get records will be added later.
-        return Task.FromResult<ActionResult<IEnumerable<MedicalRecordDto>>>(Ok(new List<MedicalRecordDto>()));
+        var ownerId = GetCurrentUserId();
+        var records = await _medicalRecordService.GetMedicalRecordsAsync(petId, ownerId);
+        return Ok(records);
     }
 
     [HttpGet("{recordId}")]
-    public Task<ActionResult<MedicalRecordDto>> GetMedicalRecord(int petId, int recordId)
+    public async Task<ActionResult<MedicalRecordDto>> GetMedicalRecord(int petId, int recordId)
     {
-        return Task.FromResult<ActionResult<MedicalRecordDto>>(Ok(new MedicalRecordDto { Id = recordId, PetId = petId, Diagnosis = "Placeholder", Treatment = "Placeholder" }));
+        var ownerId = GetCurrentUserId();
+        var record = await _medicalRecordService.GetMedicalRecordAsync(recordId, petId, ownerId);
+        if (record == null)
+        {
+            return NotFound();
+        }
+        return Ok(record);
     }
 
     [HttpPost]
-    public Task<ActionResult<MedicalRecordDto>> CreateMedicalRecord(int petId, CreateMedicalRecordRequestDto createDto)
+    public async Task<ActionResult<MedicalRecordDto>> CreateMedicalRecord(int petId, CreateMedicalRecordRequestDto createDto)
     {
-        var newRecord = new MedicalRecordDto
+        if (petId != createDto.PetId)
         {
-            Id = new Random().Next(1, 1000),
-            PetId = petId,
-            VisitDate = createDto.VisitDate,
-            Diagnosis = createDto.Diagnosis,
-            Treatment = createDto.Treatment,
-            Notes = createDto.Notes,
-            VeterinarianId = createDto.VeterinarianId
-        };
-        return Task.FromResult<ActionResult<MedicalRecordDto>>(CreatedAtAction(nameof(GetMedicalRecord), new { petId = petId, recordId = newRecord.Id }, newRecord));
+            return BadRequest("Pet ID in URL does not match Pet ID in body.");
+        }
+        var ownerId = GetCurrentUserId();
+        try
+        {
+            var createdRecord = await _medicalRecordService.CreateMedicalRecordAsync(createDto, ownerId);
+            return CreatedAtAction(nameof(GetMedicalRecord), new { petId = createdRecord.PetId, recordId = createdRecord.Id }, createdRecord);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return Forbid();
+        }
+    }
+
+    [HttpPut("{recordId}")]
+    public async Task<IActionResult> UpdateMedicalRecord(int petId, int recordId, UpdateMedicalRecordRequestDto updateDto)
+    {
+        var ownerId = GetCurrentUserId();
+        var result = await _medicalRecordService.UpdateMedicalRecordAsync(recordId, updateDto, ownerId);
+        if (!result)
+        {
+            return NotFound();
+        }
+        return NoContent();
+    }
+
+    [HttpDelete("{recordId}")]
+    public async Task<IActionResult> DeleteMedicalRecord(int petId, int recordId)
+    {
+        var ownerId = GetCurrentUserId();
+        var result = await _medicalRecordService.DeleteMedicalRecordAsync(recordId, ownerId);
+        if (!result)
+        {
+            return NotFound();
+        }
+        return NoContent();
     }
 }
