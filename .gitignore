@@ -45,3 +45,6 @@ todolist.md
 
 # Roo local development rules
 .roo/
+
+# Handoff documents
+handoff-*.md
