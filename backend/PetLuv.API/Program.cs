@@ -22,6 +22,8 @@ builder.Services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
 builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 builder.Services.AddScoped<IDailyCareRepository, DailyCareRepository>();
 builder.Services.AddScoped<IDailyCareService, DailyCareService>();
+builder.Services.AddScoped<IVeterinarianRepository, VeterinarianRepository>();
+builder.Services.AddScoped<IVeterinarianService, VeterinarianService>();
 
 var jwtSecret = builder.Configuration["Jwt:Secret"];
 if (string.IsNullOrEmpty(jwtSecret))
