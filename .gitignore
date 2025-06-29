@@ -1,0 +1,44 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# Rider
+.idea/
+
+# Binaries
+bin/
+obj/
+
+# Node
+node_modules/
+dist/
+.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build results
+[Bb]uild/
+[Rr]elease/
+[Dd]ebug/
+x64/
+x86/
+build/
+releases/
+artifacts/
+
+# Secrets
+*.env
+appsettings.Development.json
+secrets.json
+
+# User-specific files
+*.DotSettings.user
+
+# Project documentation
+spec.md
+todolist.md
+.roo/
